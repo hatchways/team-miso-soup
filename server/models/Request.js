@@ -12,11 +12,11 @@ const requestSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    start: {
+    start_date: {
         type: Date,
         required: true
     },
-    end: {
+    end_date: {
         type: Date,
         required: true
     },
@@ -31,6 +31,10 @@ const requestSchema = new mongoose.Schema({
     paid: {
         type: Boolean,
         default: false
+    },
+    request_date: {
+        type: Date,
+        default: Date.now
     }
 });
 

@@ -2,31 +2,35 @@ const mongoose = require("mongoose");
 
 const requestSchema = new mongoose.Schema(
   {
-    user_id: {
+    //TODO: Change userId & sitterId to references
+    userId: {
       type: String,
       required: true,
       unique: true,
     },
-    sitter_id: {
+    sitterId: {
       type: String,
       required: true,
       unique: true,
     },
-    start_date: {
+    startDate: {
       type: Date,
       required: true,
     },
-    end_date: {
+    endDate: {
       type: Date,
       required: true,
+      validate: {
+        validator: function (v) {
+          return v >= this.startDate;
+        },
+        message: "End date must come on or after start date.",
+      },
     },
-    accepted: {
-      type: Boolean,
-      default: false,
-    },
-    declined: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "declined"],
+      default: "pending",
     },
     paid: {
       type: Boolean,
@@ -36,4 +40,4 @@ const requestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = Request = mongoose.model("request", requestSchema);
+module.exports = Request = mongoose.model("Request", requestSchema);
